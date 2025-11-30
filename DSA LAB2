@@ -1,0 +1,109 @@
+#include <iostream>
+#define MAX 100
+using namespace std;
+
+class Stack {
+private:
+    int a[MAX];
+    int topIndex;
+
+public:
+    Stack() {
+        topIndex = -1;
+    }
+
+    bool overflow() {
+        return topIndex == MAX - 1;
+    }
+
+    bool underflow() {
+        return topIndex == -1;
+    }
+
+    void push(int x) {
+        if (overflow()) {
+            cout << "Stack is full!" << endl;
+        } else {
+            topIndex++;
+            a[topIndex] = x;
+            cout << x << " pushed." << endl;
+        }
+    }
+
+    void pop() {
+        if (underflow()) {
+            cout << "Stack is empty!" << endl;
+        } else {
+            cout << a[topIndex] << " popped." << endl;
+            topIndex--;
+        }
+    }
+
+    void traverse() {
+        if (underflow()) {
+            cout << "Stack is empty!" << endl;
+        } else {
+            cout << "Stack elements: ";
+            for (int i = topIndex; i >= 0; i--) {
+                cout << a[i] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    int top() {
+        if (underflow()) {
+            cout << "Stack is empty!" << endl;
+            return -1;
+        }
+        return a[topIndex];
+    }
+};
+
+int main() {
+    Stack s;
+    int choice, value;
+
+    do {
+        cout << "\n----------- STACK OPERATIONS -----------\n";
+        cout << "1. Push\n";
+        cout << "2. Pop\n";
+        cout << "3. Traverse\n";
+        cout << "4. Top\n";
+        cout << "5. Exit\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+        case 1:
+            cout << "Enter value: ";
+            cin >> value;
+            s.push(value);
+            break;
+
+        case 2:
+            s.pop();
+            break;
+
+        case 3:
+            s.traverse();
+            break;
+
+        case 4:
+            value = s.top();
+            if (value != -1)
+                cout << "Top element = " << value << endl;
+            break;
+
+        case 5:
+            cout << "Exiting..." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice!" << endl;
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}

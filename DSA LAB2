@@ -63,6 +63,7 @@ public:
 int main() {
     Stack s;
     int choice, value;
+cout<<"PREPARED BY KEEPAMAHARJAN"<<endl;
 
     do {
         cout << "\n----------- STACK OPERATIONS -----------\n";

@@ -1,0 +1,66 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+class Expression {
+public:
+    int precedence(char c) {
+        if (c == '^') return 3;
+        if (c == '*' || c == '/') return 2;
+        if (c == '+' || c == '-') return 1;
+        return 0;
+    }
+
+    string infixToPostfix(string s) {
+        stack<char> st;
+        string result = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s[i];
+
+            // If operand ? add to result
+            if (isalnum(c)) {
+                result += c;
+            }
+            // If '(' ? push
+            else if (c == '(') {
+                st.push(c);
+            }
+            // If ')' ? pop until '('
+            else if (c == ')') {
+                while (!st.empty() && st.top() != '(') {
+                    result += st.top();
+                    st.pop();
+                }
+                st.pop(); // remove '('
+            }
+            // Operator case
+            else {
+                while (!st.empty() && precedence(st.top()) >= precedence(c)) {
+                    result += st.top();
+                    st.pop();
+                }
+                st.push(c);
+            }
+        }
+
+        // Pop remaining operators
+        while (!st.empty()) {
+            result += st.top();
+            st.pop();
+        }
+
+        return result;
+    }
+};
+
+int main() {
+    Expression E;
+    string exp;
+
+    cout << "Enter infix expression: ";
+    cin >> exp;
+
+    cout << "Postfix expression: " << E.infixToPostfix(exp);
+    return 0;
+}
